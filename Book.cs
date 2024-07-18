@@ -1,18 +1,26 @@
+using System.Text.Json.Serialization;
+
 namespace LibraryManagementApp;
 
 public class Book
 {
-    public readonly List<Page> Pages = new();
-    public readonly List<Author> Authors = new();
+    public List<Page> Pages { get; set; }
+    public List<Author> Authors { get; set; }
     public string Name { get; set; }
-    public bool IsAvailable = true;
+    public bool IsAvailable { get; set; }
     public DateTime GivenDate { get; set; }
     public DateTime AvailableDate { get; set; }
+    
+    [JsonIgnore]
     public TimeSpan DateLeft => AvailableDate - GivenDate;
+    [JsonIgnore]
     public int PageCount => Pages.Count;
 
-    public Book(string name)
+    public Book(string name, List<Page> pages, List<Author> authors)
     {
         Name = name;
+        Pages = pages;
+        Authors = authors;
+        IsAvailable = false;
     }
 }

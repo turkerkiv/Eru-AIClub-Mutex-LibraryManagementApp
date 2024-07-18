@@ -8,15 +8,19 @@ public class Author : Member
     {
     }
 
-    public void WritePage(string text)
+    public bool TryWritePage(string text)
     {
-        //create page obj and add to currentPages
+        string[] words = text.Split(' ');
+        if (words.Length > 200) return false;
+        Page newPage = new Page(text);
+        return true;
     }
 
-    public Book CreateBook(List<Page> pages)
+    public Book CreateBook(string bookName)
     {
-        //create book from currentpages and return
-        return null!;
+        Book book = new Book(bookName, CurrentPages, new List<Author> { this });
+        CurrentPages = new();
+        return book;
     }
 
     public void ImportPages()
