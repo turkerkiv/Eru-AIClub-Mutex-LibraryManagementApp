@@ -5,36 +5,38 @@ using System.Threading.Tasks;
 
 namespace LibraryManagementApp
 {
-    public class AccountManager
+    public static class AccountManager
     {
-        Human _human;
+        static Human? _human;
 
-        public bool IsLoggedIn => _human != null;
+        //şu an tüm classlar buna erişebilir ve bu demek oluyor ki bir member bile üye kaydedebilir???
+        public static bool IsLoggedIn => _human != null;
 
-        public bool Login(Human human, string password)
+        public static bool Login(int id, string password)
         {
+            //check id and create object according to that id. if it is author then author if it is member then member
             if (IsLoggedIn) return false;
 
             //check the passwords etc.
-            _human = human;
+            // _human = human;
             return true;
         }
 
-        public void Logout()
+        public static void Logout()
         {
             if (!IsLoggedIn) return;
 
             _human = null;
         }
 
-        public void Register(Human human, string password)
+        public static void Register(Human human)
         {
             if (IsLoggedIn) return;
             //check if there is same user id and then register it
-            Login(human, password);
+            Login(human.Id, human.Password);
         }
 
-        public bool ChangePassword(string newPassword)
+        public static bool ChangePassword(string newPassword)
         {
             if (!IsLoggedIn) return false;
 
