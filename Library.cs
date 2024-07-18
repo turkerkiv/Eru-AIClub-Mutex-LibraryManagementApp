@@ -1,15 +1,7 @@
 namespace LibraryManagementApp;
 
-public class Library
+public static class Library
 {
-    public readonly Repository<Book> BookRepo;
-    public readonly Repository<Staff> StaffRepo;
-    public readonly Repository<Member> MemberRepo;
-
-    public Library()
-    {
-        BookRepo = new Repository<Book>();
-        StaffRepo = new Repository<Staff>();
-        MemberRepo = new Repository<Member>();
-    }
+    public static readonly Repository<Book> BookRepo = new();
+    public static readonly Repository<Human> HumanRepo = new();
 }
