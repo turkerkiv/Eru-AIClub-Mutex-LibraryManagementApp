@@ -9,16 +9,19 @@ namespace LibraryManagementApp
     {
         static Human? _human;
 
-        //şu an tüm classlar buna erişebilir ve bu demek oluyor ki bir member bile üye kaydedebilir???
         public static bool IsLoggedIn => _human != null;
 
         public static bool Login(int id, string password)
         {
-            //check id and create object according to that id. if it is author then author if it is member then member
             if (IsLoggedIn) return false;
 
-            //check the passwords etc.
-            // _human = human;
+            var human = Library.HumanRepo.MyList.FirstOrDefault(a => a.Id == id);
+
+            if(human == null) return false;
+
+            if(human.Password != password) return false;
+
+            _human = human;
             return true;
         }
 
@@ -29,11 +32,14 @@ namespace LibraryManagementApp
             _human = null;
         }
 
-        public static void Register(Human human)
+        public static bool Register(Human human)
         {
-            if (IsLoggedIn) return;
-            //check if there is same user id and then register it
+            if (IsLoggedIn) return false;
+            var humans = Library.HumanRepo.MyList;
+            if (humans.Any(m => m.Id == human.Id)) return false;
+            humans.Add((Member)human);
             Login(human.Id, human.Password);
+            return true;
         }
 
         public static bool ChangePassword(string newPassword)
