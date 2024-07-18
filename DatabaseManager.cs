@@ -66,7 +66,7 @@ public static class DatabaseManager
 
     public class HumanWrapper
     {
-        public string TypeName { get; set; }
-        public string JsonData { get; set; }
+        public string TypeName { get; set; } = null!;
+        public string JsonData { get; set; } = null!;
     }
 }

@@ -1,4 +1,4 @@
-namespace LibraryManagementApp;
+namespace LibraryManagementApp.View;
 
 public static class UIHelper
 {

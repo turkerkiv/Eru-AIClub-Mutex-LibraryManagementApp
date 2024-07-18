@@ -13,7 +13,6 @@ public class Page
 
     public bool TryEditText(string text)
     {
-        return false;
         string[] words = text.Split(' ');
         if (words.Length > 200)
         {
