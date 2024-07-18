@@ -18,7 +18,9 @@ public class UIHandler
         ConsoleKey inputKey = ConsoleKey.None;
         while (inputKey != ConsoleKey.Escape)
         {
-            System.Console.WriteLine("\nHere is the list of operations you can do: ");
+            System.Console.WriteLine();
+            System.Console.WriteLine("Here is the list of operations you can do: ");
+            System.Console.WriteLine();
 
             if (AccountManager.IsLoggedIn)
             {
@@ -52,7 +54,6 @@ public class UIHandler
             switch (inputKey)
             {
                 case ConsoleKey.D1:
-                System.Console.WriteLine("qfef");
                     LoginUI();
                     break;
                 case ConsoleKey.D2:
@@ -64,6 +65,7 @@ public class UIHandler
 
     private void LoginUI()
     {
+        System.Console.WriteLine();
         System.Console.WriteLine("Enter your ID: ");
         int id = UIHelper.GetValidInteger();
         System.Console.WriteLine("Enter your password: ");
@@ -74,6 +76,7 @@ public class UIHandler
     private void RegisterUI()
     {
         //maybe change here to be id name password etc again and then make it smt
+        System.Console.WriteLine();
         System.Console.WriteLine("Enter your name: ");
         string name = Console.ReadLine() ?? "";
         System.Console.WriteLine("Enter your surname: ");
