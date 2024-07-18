@@ -7,8 +7,8 @@ namespace LibraryManagementApp
 {
     public static class AccountManager
     {
-        static Human? _human;
-
+        private static Human? _human;
+        public static Human? CurrentHuman => _human;
         public static bool IsLoggedIn => _human != null;
 
         public static bool Login(int id, string password)
@@ -17,9 +17,9 @@ namespace LibraryManagementApp
 
             var human = Library.HumanRepo.MyList.FirstOrDefault(a => a.Id == id);
 
-            if(human == null) return false;
+            if (human == null) return false;
 
-            if(human.Password != password) return false;
+            if (human.Password != password) return false;
 
             _human = human;
             return true;

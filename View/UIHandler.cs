@@ -7,10 +7,6 @@ namespace LibraryManagementApp.View;
 
 public class UIHandler
 {
-    public UIHandler()
-    {
-    }
-
     public void RunTheApp()
     {
         System.Console.WriteLine("Welcome to the library!");
@@ -24,6 +20,29 @@ public class UIHandler
 
             if (AccountManager.IsLoggedIn)
             {
+                //Read a book????
+                if (AccountManager.CurrentHuman is Member member)
+                {
+                    System.Console.WriteLine("1- Search book by name");
+                    System.Console.WriteLine("2- Borrow book by Id");
+                }
+                if (AccountManager.CurrentHuman is Author author)
+                {
+                    System.Console.WriteLine("3- Write a page");
+                    System.Console.WriteLine("4- Turn all pages into book");
+                }
+                if (AccountManager.CurrentHuman is Recepcionist recepcionist)
+                {
+                    System.Console.WriteLine("1- See pending member requests");
+                    System.Console.WriteLine("2- Change role of someone");
+                    System.Console.WriteLine("3- See pending author requests");
+                }
+                if (AccountManager.CurrentHuman is Manager manager)
+                {
+                    System.Console.WriteLine("1- Hire recepcionist");
+                    System.Console.WriteLine("2- Fire recepcionist");
+                }
+
                 System.Console.WriteLine("0- Logout");
             }
             else
