@@ -2,11 +2,10 @@ namespace LibraryManagementApp;
 
 public class Author : Member
 {
-    public readonly List<Page> CurrentPages;
+    public List<Page> CurrentPages { get; set; } = new();
 
     public Author(string password, string name, string surname, int age) : base(password, name, surname, age)
     {
-        CurrentPages = new();
     }
 
     public void WritePage(string text)

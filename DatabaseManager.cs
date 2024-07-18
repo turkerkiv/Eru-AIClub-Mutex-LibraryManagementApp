@@ -16,7 +16,7 @@ public static class DatabaseManager
             humans.ForEach(humanWrapper =>
             {
                 Type type = Type.GetType($"LibraryManagementApp.{humanWrapper.TypeName}")!;
-                Human hmn = (Human) JsonSerializer.Deserialize(humanWrapper.JsonData, type)!;
+                Human hmn = (Human)JsonSerializer.Deserialize(humanWrapper.JsonData, type)!;
                 System.Console.WriteLine(hmn.GetType());
                 Library.HumanRepo.MyList.Add(hmn);
             });
@@ -31,10 +31,14 @@ public static class DatabaseManager
 
     public static void SaveAllRepos()
     {
+        // Library.HumanRepo.MyList.Add(new Recepcionist(new List<Weekdays> { Weekdays.Friday, Weekdays.Monday }, "10:00-18:00", "1", "recepci", "onist", 50));
+        // Library.HumanRepo.MyList.Add(new Manager(new List<Weekdays> { Weekdays.Wednesday, Weekdays.Saturday }, "08:00-20:00", "1", "mana", "ger", 32));
+        // Library.HumanRepo.MyList.Add(new Author("1", "autho", "r", 25));
+        // Library.HumanRepo.MyList.Add(new Member("1", "mem", "ber", 54));
         var humanWrappers = Library.HumanRepo.MyList.Select(h => new HumanWrapper
         {
             TypeName = h.GetType().Name,
-            JsonData = JsonSerializer.Serialize(h),
+            JsonData = JsonSerializer.Serialize(h, h.GetType()),
         });
 
         string humansJson = JsonSerializer.Serialize(humanWrappers);

@@ -3,7 +3,7 @@ namespace LibraryManagementApp;
 
 public class Recepcionist : Staff
 {
-    public Recepcionist(List<string> workDays, string shift, string password, string name, string surname, int age) : base(workDays, shift, password, name, surname, age)
+    public Recepcionist(List<Weekdays> workDays, string shift, string password, string name, string surname, int age) : base(workDays, shift, password, name, surname, age)
     {
     }
 
