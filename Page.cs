@@ -2,6 +2,7 @@ namespace LibraryManagementApp;
 
 public class Page
 {
+    public int PageNumber { get; set; }
     public string Text { get; private set; } = string.Empty;
     public int WordCount => Text.Split(' ').Length;
 
