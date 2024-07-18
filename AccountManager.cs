@@ -46,9 +46,7 @@ namespace LibraryManagementApp
         {
             if (!IsLoggedIn) return false;
 
-            //check _human first
-            // _human.Password = newPassword;
-            //save to the db.
+            _human!.Password = newPassword;
             return true;
         }
     }

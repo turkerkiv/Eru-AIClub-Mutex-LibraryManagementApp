@@ -3,7 +3,7 @@ namespace LibraryManagementApp;
 public abstract class Human
 {
     public int Id { get; }
-    public string Password { get; private set;}
+    public string Password { get; set;}
     public string Name { get; }
     public string Surname { get; }
     public int Age { get; }
