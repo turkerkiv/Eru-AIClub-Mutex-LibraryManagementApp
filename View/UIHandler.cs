@@ -18,7 +18,7 @@ public class UIHandler
         ConsoleKey inputKey = ConsoleKey.None;
         while (inputKey != ConsoleKey.Escape)
         {
-            System.Console.WriteLine("Here is the list of operations you can do: ");
+            System.Console.WriteLine("\nHere is the list of operations you can do: ");
 
             if (AccountManager.IsLoggedIn)
             {
@@ -42,7 +42,7 @@ public class UIHandler
         {
             switch (inputKey)
             {
-                case ConsoleKey.NumPad0:
+                case ConsoleKey.D0:
                     AccountManager.Logout();
                     break;
             }
@@ -51,10 +51,11 @@ public class UIHandler
         {
             switch (inputKey)
             {
-                case ConsoleKey.NumPad1:
+                case ConsoleKey.D1:
+                System.Console.WriteLine("qfef");
                     LoginUI();
                     break;
-                case ConsoleKey.NumPad2:
+                case ConsoleKey.D2:
                     RegisterUI();
                     break;
             }
