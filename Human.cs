@@ -15,6 +15,7 @@ public abstract class Human
         Name = name;
         Surname = surname;
         Age = age;
+        Id = Library.MemberRepo.MyList.Count + Library.StaffRepo.MyList.Count + 1;
     }
 
 }
