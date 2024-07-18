@@ -1,7 +1,9 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using LibraryManagementApp;
 using LibraryManagementApp.View;
 
-Console.WriteLine("Hello, World!");
-UIHandler uIHandler = new UIHandler();
+DatabaseManager.LoadAllRepos();
 
+UIHandler uIHandler = new UIHandler();
 uIHandler.RunTheApp();
+
+DatabaseManager.SaveAllRepos();

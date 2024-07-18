@@ -1,0 +1,1 @@
+[{"TypeName":"Member","JsonData":"{\u0022Id\u0022:1,\u0022Password\u0022:\u00221134\u0022,\u0022Name\u0022:\u0022trk\u0022,\u0022Surname\u0022:\u0022tktkt\u0022,\u0022Age\u0022:1}"},{"TypeName":"Author","JsonData":"{\u0022Id\u0022:2,\u0022Password\u0022:\u00221\u0022,\u0022Name\u0022:\u0022tkwrogm\u0022,\u0022Surname\u0022:\u0022wrgow\u0022,\u0022Age\u0022:2}"}]

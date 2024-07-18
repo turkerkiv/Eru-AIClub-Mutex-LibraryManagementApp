@@ -1,12 +1,14 @@
+using System.ComponentModel;
+
 namespace LibraryManagementApp;
 
 public abstract class Human
 {
-    public int Id { get; }
-    public string Password { get; set;}
-    public string Name { get; }
-    public string Surname { get; }
-    public int Age { get; }
+    public int Id { get; set; }
+    public string Password { get; set; }
+    public string Name { get; set; }
+    public string Surname { get; set; }
+    public int Age { get; set; }
 
     public Human(string password, string name, string surname, int age)
     {

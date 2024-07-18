@@ -36,6 +36,7 @@ public class UIHandler
             inputKey = Console.ReadKey().Key;
             ProcessInputKey(inputKey);
         }
+
     }
 
     private void ProcessInputKey(ConsoleKey inputKey)
