@@ -17,8 +17,4 @@ public abstract class Human
         Age = age;
     }
 
-    public void ChangePassword(string newPassword)
-    {
-        Password = newPassword;
-    }
 }
