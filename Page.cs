@@ -7,20 +7,20 @@ public class Page
 
     public Page(string text)
     {
-        // TryEditText(text);
+        TryEditText(text);
     }
 
     public bool TryEditText(string text)
     {
         return false;
-    //     string[] words = text.Split(' ');
-    //     if (words.Length > 200)
-    //     {
-    //         Text = string.Join(' ', words, 0, 200);
-    //         return false;
-    //     }
+        string[] words = text.Split(' ');
+        if (words.Length > 200)
+        {
+            Text = string.Join(' ', words, 0, 200);
+            return false;
+        }
 
-    //     Text = text;
-    //     return true;
+        Text = text;
+        return true;
     }
 }
