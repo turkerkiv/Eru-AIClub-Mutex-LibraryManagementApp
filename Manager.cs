@@ -8,6 +8,16 @@ public class Manager : Staff
 
     }
 
+    public void AddBookToLibrary(Book book)
+    {
+
+    }
+
+    public void RemoveBookFromLibrary(Book book)
+    {
+
+    }
+
     public bool TryHireStaff(Human human, List<Weekdays> workdays, string shift)
     {
         if (human is Staff staff) return false;

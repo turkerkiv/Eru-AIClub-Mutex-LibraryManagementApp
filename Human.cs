@@ -20,4 +20,13 @@ public abstract class Human
         Id = Library.HumanRepo.MyList.Count + 1;
     }
 
+    public List<Book> SearchBook(string bookName)
+    {
+        return Library.BookRepo.MyList.Where(b => b.Name.Contains(bookName)).ToList();
+    }
+
+    public Book ReadBook(int id)
+    {
+        return Library.BookRepo.MyList.Find(b => b.Id == id)!;
+    }
 }

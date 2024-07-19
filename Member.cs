@@ -6,15 +6,13 @@ public class Member : Human
     {
     }
 
-    public Book BorrowBook(string bookName)
+    public Book BorrowBook(int id)
     {
-        //search book from repo and send request to recepcionist
+        Book bookToBorrow = Library.BookRepo.MyList.Find(b => b.Id == id)!;
+        Random rnd = new Random();
+        List<Recepcionist> recepcionists = Library.HumanRepo.MyList.OfType<Recepcionist>().ToList();
+        Recepcionist r = recepcionists[rnd.Next(recepcionists.Count)];
+        r.RequestBorrowBook(this, bookToBorrow);
         return null!;
-    }
-
-    public string RequestNewBook(string bookName)
-    {
-        //send request to recepcionist
-        return string.Empty;
     }
 }

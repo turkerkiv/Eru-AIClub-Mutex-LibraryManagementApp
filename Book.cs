@@ -4,15 +4,16 @@ namespace LibraryManagementApp;
 
 public class Book
 {
+    public int Id { get; set; }
     public List<Page> Pages { get; set; }
     public List<Author> Authors { get; set; }
     public string Name { get; set; }
     public bool IsAvailable { get; set; }
-    public DateTime GivenDate { get; set; }
-    public DateTime AvailableDate { get; set; }
+    public DateTime? GivenDate { get; set; }
+    public DateTime? AvailableDate { get; set; }
     
     [JsonIgnore]
-    public TimeSpan DateLeft => AvailableDate - GivenDate;
+    public TimeSpan? DateLeft => AvailableDate - GivenDate;
     [JsonIgnore]
     public int PageCount => Pages.Count;
 
@@ -22,5 +23,6 @@ public class Book
         Pages = pages;
         Authors = authors;
         IsAvailable = false;
+        Id = Library.BookRepo.MyList.Count + 1;
     }
 }
