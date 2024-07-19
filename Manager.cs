@@ -8,13 +8,19 @@ public class Manager : Staff
 
     }
 
-    public void HireStaff(Staff staff)
+    public bool TryHireStaff(Human human, List<Weekdays> workdays, string shift)
     {
-        //just access to staff repo and add or remove
+        if (human is Staff staff) return false;
+
+        Library.HumanRepo.MyList.Remove(human);
+        Recepcionist recepcionist = new Recepcionist(workdays, shift, human.Password, human.Name, human.Surname, human.Age);
+        recepcionist.Id = human.Id;
+        Library.HumanRepo.MyList.Add(recepcionist);
+        return true;
     }
 
     public void FireStaff(Staff staff)
     {
-
+        Library.HumanRepo.MyList.Remove(staff);
     }
 }
