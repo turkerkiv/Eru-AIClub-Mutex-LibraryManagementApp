@@ -32,14 +32,9 @@ namespace LibraryManagementApp
             _human = null;
         }
 
-        public static bool Register(Human human)
+        public static void Register(Human human)
         {
-            if (IsLoggedIn) return false;
-            var humans = Library.HumanRepo.MyList;
-            if (humans.Any(m => m.Id == human.Id)) return false;
-            humans.Add((Member)human);
-            Login(human.Id, human.Password);
-            return true;
+             Library.HumanRepo.MyList.Add(human);
         }
 
         public static bool ChangePassword(string newPassword)

@@ -32,13 +32,9 @@ public class Recepcionist : Staff
 
     public string SignUpMember(Member member)
     {
-        //add to memberrepo and if successfull
-        //return random temp Password
-        return string.Empty;
-    }
-
-    public void DeleteMember(Member member)
-    {
-
+        Random rnd = new Random();
+        member.Password = Math.Round(rnd.NextDouble() * 1000).ToString();
+        AccountManager.Register(member);
+        return member.Password;
     }
 }

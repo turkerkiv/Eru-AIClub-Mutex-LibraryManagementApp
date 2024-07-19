@@ -33,9 +33,10 @@ public class UIHandler
                 }
                 if (AccountManager.CurrentHuman is Recepcionist recepcionist)
                 {
-                    System.Console.WriteLine("1- See pending member requests");
-                    System.Console.WriteLine("2- Change role of someone");
-                    System.Console.WriteLine("3- See pending author requests");
+                    System.Console.WriteLine("1- Register a member");
+                    System.Console.WriteLine("2- See pending borrow requests");
+                    System.Console.WriteLine("3- Change role of someone");
+                    System.Console.WriteLine("4- See pending creating book requests");
                 }
                 if (AccountManager.CurrentHuman is Manager manager)
                 {
@@ -48,7 +49,6 @@ public class UIHandler
             else
             {
                 System.Console.WriteLine("1- Login");
-                System.Console.WriteLine("2- Register");
                 System.Console.WriteLine("ESC- Exit");
             }
 
@@ -102,9 +102,6 @@ public class UIHandler
                 case ConsoleKey.D1:
                     LoginUI();
                     break;
-                case ConsoleKey.D2:
-                    RegisterUI();
-                    break;
             }
         }
     }
@@ -119,22 +116,20 @@ public class UIHandler
         AccountManager.Login(id, password);
     }
 
-    private void RegisterUI()
+    private void RegisterUI(Recepcionist rece)
     {
-        //maybe change here to be id name password etc again and then make it smt
         System.Console.WriteLine();
-        System.Console.WriteLine("Enter your name: ");
+        System.Console.WriteLine("Enter member's name: ");
         string name = Console.ReadLine() ?? "";
-        System.Console.WriteLine("Enter your surname: ");
+        System.Console.WriteLine("Enter member's surname: ");
         string surname = Console.ReadLine() ?? "";
-        System.Console.WriteLine("Enter your password: ");
-        string password = Console.ReadLine() ?? "";
-        System.Console.WriteLine("Enter your age: ");
+        System.Console.WriteLine("Enter member's age: ");
         int age = UIHelper.GetValidInteger();
 
-        Member? member = new Member(password, name, surname, age);
+        Member? member = new Member("", name, surname, age);
+        string temppass = rece.SignUpMember(member);
 
-        AccountManager.Register(member);
+        System.Console.WriteLine("Signed up. Here is the temporary password of member: " + temppass);
     }
 
     private void WritePageUI(Author author)

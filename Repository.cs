@@ -6,7 +6,6 @@ public class Repository<T>
 
     public Repository()
     {
-        //will get list from databasemaanger
         MyList = new List<T>();
     }
 }
