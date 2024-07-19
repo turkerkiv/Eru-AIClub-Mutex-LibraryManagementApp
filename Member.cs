@@ -12,7 +12,7 @@ public class Member : Human
         Random rnd = new Random();
         List<Recepcionist> recepcionists = Library.HumanRepo.MyList.OfType<Recepcionist>().ToList();
         Recepcionist r = recepcionists[rnd.Next(recepcionists.Count)];
-        r.RequestBorrowBook(this, bookToBorrow);
+        r.GetBorrowRequest(this, bookToBorrow);
         return null!;
     }
 }

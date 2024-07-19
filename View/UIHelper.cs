@@ -13,4 +13,16 @@ public static class UIHelper
         }
         return num;
     }
+
+    public static int GetValidIntWithinRange(int listCount)
+    {
+        int num = GetValidInteger();
+        bool isWithinRange = listCount > num && num > 0;
+        while (!isWithinRange)
+        {
+            num = GetValidInteger();
+            isWithinRange = listCount > num && num > 0;
+        }
+        return num;
+    }
 }

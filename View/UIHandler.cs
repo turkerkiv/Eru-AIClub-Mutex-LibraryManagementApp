@@ -111,7 +111,8 @@ public class UIHandler
             switch (inputKey)
             {
                 case ConsoleKey.D9:
-                //read book
+                    ReadBookUI(AccountManager.CurrentHuman!);
+                    break;
                 case ConsoleKey.D0:
                     AccountManager.Logout();
                     break;
@@ -170,5 +171,26 @@ public class UIHandler
         System.Console.WriteLine("Enter book's name: ");
         string name = Console.ReadLine() ?? "";
         author.CreateBook(name);
+    }
+
+    private void ReadBookUI(Human human)
+    {
+        System.Console.WriteLine("Enter book's Id: ");
+        int id = UIHelper.GetValidIntWithinRange(Library.BookRepo.MyList.Count);
+
+        Book book = human.ReadBook(id);
+
+        int page = 0;
+        do
+        {
+            System.Console.WriteLine("This book is " + book.PageCount + " pages long. Enter page number to read or 0 to exit");
+            page = UIHelper.GetValidIntWithinRange(book.PageCount + 1);
+
+            string text = book.Pages[page - 1].Text ?? "";
+            System.Console.WriteLine("----------------Page " + page + "----------------");
+            System.Console.WriteLine(text);
+            System.Console.WriteLine("----------------Page " + page + "----------------");
+        }
+        while (page != 0);
     }
 }
