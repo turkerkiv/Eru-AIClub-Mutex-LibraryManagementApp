@@ -20,7 +20,6 @@ public class UIHandler
 
             if (AccountManager.IsLoggedIn)
             {
-                //Read a book????
                 if (AccountManager.CurrentHuman is Member member)
                 {
                     System.Console.WriteLine("1- Search book by name");
@@ -34,16 +33,15 @@ public class UIHandler
                 if (AccountManager.CurrentHuman is Recepcionist recepcionist)
                 {
                     System.Console.WriteLine("1- Register a member");
-                    System.Console.WriteLine("2- See pending borrow requests");
-                    System.Console.WriteLine("3- Change role of someone");
-                    System.Console.WriteLine("4- See pending creating book requests");
+                    System.Console.WriteLine("2- See pending borrow request");
+                    System.Console.WriteLine("3- See pending book creation request");
                 }
                 if (AccountManager.CurrentHuman is Manager manager)
                 {
-                    System.Console.WriteLine("1- Hire recepcionist");
-                    System.Console.WriteLine("2- Fire recepcionist");
+                    System.Console.WriteLine("1- Change role of someone");
                 }
 
+                System.Console.WriteLine("9- Read a book");
                 System.Console.WriteLine("0- Logout");
             }
             else
@@ -86,10 +84,34 @@ public class UIHandler
                             break;
                     }
                     break;
+                case Recepcionist recepcionist:
+                    switch (inputKey)
+                    {
+                        case ConsoleKey.D1:
+                            RegisterUI(recepcionist);
+                            break;
+                        case ConsoleKey.D2:
+                            //approve borrow request with 1 more click 
+                            break;
+                        case ConsoleKey.D3:
+                            //read book then approve with 1 more click
+                            break;
+                    }
+                    break;
+                case Manager manager:
+                    switch (inputKey)
+                    {
+                        case ConsoleKey.D1:
+                            //change role with generic method
+                            break;
+                    }
+                    break;
 
             }
             switch (inputKey)
             {
+                case ConsoleKey.D9:
+                //read book
                 case ConsoleKey.D0:
                     AccountManager.Logout();
                     break;
