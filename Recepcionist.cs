@@ -9,7 +9,7 @@ public class Recepcionist : Staff
     {
     }
 
-    public void RequestBorrowBook(Human human, Book book)
+    public void GetBorrowRequest(Human human, Book book)
     {
         BookBorrowRequests.Enqueue(new BookRequest(book.Id, human.Id));
     }

@@ -17,11 +17,16 @@ public class Author : Member
         return true;
     }
 
-    public Book CreateBook(string bookName)
+    public void CreateBook(string bookName)
     {
+        Random rnd = new Random();
+        List<Manager> managers = Library.HumanRepo.MyList.OfType<Manager>().ToList();
+        Manager m = managers[rnd.Next(managers.Count)];
+
         Book book = new Book(bookName, CurrentPages, new List<Author> { this });
         CurrentPages = new();
-        return book;
+
+        m.GetBookCreationRequest(book);
     }
 
     public void ImportPages()

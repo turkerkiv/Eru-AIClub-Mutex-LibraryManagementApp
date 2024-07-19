@@ -147,8 +147,6 @@ public class UIHandler
     {
         System.Console.WriteLine("Enter book's name: ");
         string name = Console.ReadLine() ?? "";
-        Book book = author.CreateBook(name);
-        //request book creation from recepcionist
-        Library.BookRepo.MyList.Add(book);
+        author.CreateBook(name);
     }
 }
