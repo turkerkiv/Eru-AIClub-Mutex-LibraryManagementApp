@@ -62,6 +62,32 @@ public class UIHandler
     {
         if (AccountManager.IsLoggedIn)
         {
+            switch (AccountManager.CurrentHuman)
+            {
+                case Author author:
+                    switch (inputKey)
+                    {
+                        case ConsoleKey.D3:
+                            WritePageUI(author);
+                            break;
+                        case ConsoleKey.D4:
+                            CreateBookUI(author);
+                            break;
+                    }
+                    break;
+                case Member member:
+                    switch (inputKey)
+                    {
+                        case ConsoleKey.D1:
+                            //search book
+                            break;
+                        case ConsoleKey.D2:
+                            //borrow book
+                            break;
+                    }
+                    break;
+
+            }
             switch (inputKey)
             {
                 case ConsoleKey.D0:
@@ -109,5 +135,25 @@ public class UIHandler
         Member? member = new Member(password, name, surname, age);
 
         AccountManager.Register(member);
+    }
+
+    private void WritePageUI(Author author)
+    {
+        System.Console.WriteLine("You can start writing now.");
+        string text = Console.ReadLine() ?? "";
+        while (!author.TryWritePage(text))
+        {
+            System.Console.WriteLine("Please don't exceed 200 words.");
+            text = Console.ReadLine() ?? "";
+        }
+    }
+
+    private void CreateBookUI(Author author)
+    {
+        System.Console.WriteLine("Enter book's name: ");
+        string name = Console.ReadLine() ?? "";
+        Book book = author.CreateBook(name);
+        //request book creation from recepcionist
+        Library.BookRepo.MyList.Add(book);
     }
 }

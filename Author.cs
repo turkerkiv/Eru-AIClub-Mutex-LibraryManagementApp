@@ -12,7 +12,8 @@ public class Author : Member
     {
         string[] words = text.Split(' ');
         if (words.Length > 200) return false;
-        Page newPage = new Page(text);
+        Page newPage = new Page(text, CurrentPages.Count + 1);
+        CurrentPages.Add(newPage);
         return true;
     }
 
