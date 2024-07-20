@@ -177,11 +177,11 @@ public class UIHandler
     {
         System.Console.WriteLine("Search book by name: ");
         string input = Console.ReadLine() ?? "";
-        List<Book> books = human.SearchBook(input).GetRange(0, 5);
+        List<Book> books = human.SearchBook(input);
         System.Console.WriteLine("Here is the first 5 book that matches your input: ");
         foreach (var b in books)
         {
-            System.Console.WriteLine($"Book Id: {b.Id}, Book name: {b.Name}, Author: {String.Join(' ', b.Authors)}, Page: {b.PageCount} Available to borrow?: {b.IsAvailable} " + (b.IsAvailable ? "" : "Date left to be available: " + b.DateLeft));
+            System.Console.WriteLine($"Book Id: {b.Id}, Book name: {b.Name}, Author: {String.Join(' ', b.Authors.Select(a => a.Name))}, Page: {b.PageCount} Available to borrow?: {b.IsAvailable} " + (b.IsAvailable ? "" : "Date left to be available: " + b.DateLeft));
         }
     }
 
@@ -214,7 +214,7 @@ public class UIHandler
 
         UIHelper.ReadBook(book);
 
-        System.Console.WriteLine($"Other infos about book: Name: {book.Name}, Author: {String.Join(' ', book.Authors)}");
+        System.Console.WriteLine($"Other infos about book: Name: {book.Name}, Author: {String.Join(' ', book.Authors.Select(a => a.Name))}");
         System.Console.WriteLine("Do you want to add this book to library? (y/n)");
         var key = Console.ReadKey().Key;
         if(key == ConsoleKey.Y)
