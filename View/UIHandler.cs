@@ -189,8 +189,11 @@ public class UIHandler
     {
         System.Console.WriteLine("Enter the id of book you wanna borrow: ");
         int id = UIHelper.GetValidIntWithinRange(Library.BookRepo.MyList.Count + 1);
-        member.BorrowBook(id);
-        System.Console.WriteLine("Request arrived. Wait for the recepcionist's approval.");
+        bool result = member.TryBorrowBook(id);
+        if (result)
+            System.Console.WriteLine("Request arrived. Wait for the recepcionist's approval.");
+        else   
+            System.Console.WriteLine("You tried to borrow book that already borrowed. Please wait");
     }
 
     //for members to read

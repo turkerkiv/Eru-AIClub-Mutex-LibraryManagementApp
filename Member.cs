@@ -6,12 +6,15 @@ public class Member : Human
     {
     }
 
-    public void BorrowBook(int id)
+    public bool TryBorrowBook(int id)
     {
         Book bookToBorrow = Library.BookRepo.MyList.Find(b => b.Id == id)!;
+        if (!bookToBorrow.IsAvailable) return false;
+
         Random rnd = new Random();
         List<Recepcionist> recepcionists = Library.HumanRepo.MyList.OfType<Recepcionist>().ToList();
         Recepcionist r = recepcionists[rnd.Next(recepcionists.Count)];
         r.GetBorrowRequest(this, bookToBorrow);
+        return true;
     }
 }
