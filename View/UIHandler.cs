@@ -25,11 +25,12 @@ public class UIHandler
                 {
                     System.Console.WriteLine("1- Search book by name"); //OK
                     System.Console.WriteLine("2- Borrow book by Id"); //OK
+                    System.Console.WriteLine("3- Give borrowed book back"); //OK
                 }
                 if (AccountManager.CurrentHuman is Author author)
                 {
-                    System.Console.WriteLine("3- Write a page"); //OK
-                    System.Console.WriteLine("4- Turn all pages into book"); //OK
+                    System.Console.WriteLine("4- Write a page"); //OK
+                    System.Console.WriteLine("5- Turn all pages into book"); //OK
                 }
                 if (AccountManager.CurrentHuman is Recepcionist recepcionist)
                 {
@@ -73,9 +74,12 @@ public class UIHandler
                             BorrowBookUI(author);
                             break;
                         case ConsoleKey.D3:
-                            WritePageUI(author);
+                            GiveBorrowedBookBackUI(author);
                             break;
                         case ConsoleKey.D4:
+                            WritePageUI(author);
+                            break;
+                        case ConsoleKey.D5:
                             CreateBookUI(author);
                             break;
                     }
@@ -88,6 +92,9 @@ public class UIHandler
                             break;
                         case ConsoleKey.D2:
                             BorrowBookUI(member);
+                            break;
+                        case ConsoleKey.D3:
+                            GiveBorrowedBookBackUI(member);
                             break;
                     }
                     break;
@@ -253,6 +260,12 @@ public class UIHandler
 
         if (human is Member member)
         {
+            if (member.BorrowedBooks.Count == 0)
+            {
+                System.Console.WriteLine();
+                System.Console.WriteLine("!!!You don't have any borrowed book!!!");
+                return;
+            }
             System.Console.WriteLine();
             System.Console.WriteLine("Here is the list of borrowed books by you: ");
             foreach (var b in member.BorrowedBooks)
@@ -262,13 +275,12 @@ public class UIHandler
             }
 
             System.Console.WriteLine();
-            System.Console.WriteLine("Enter book's Id or 0 to exit: ");
+            System.Console.WriteLine("Enter book's Id:");
 
             id = UIHelper.GetValidInteger();
             while (!member.BorrowedBooks.Select(b => b.Id).Contains(id))
             {
                 System.Console.WriteLine("!!!Enter valid ID!!!");
-                if(id == 0) return;
                 id = UIHelper.GetValidInteger();
             }
 
@@ -377,7 +389,7 @@ public class UIHandler
             id = UIHelper.GetValidIntWithinRange(1, Library.HumanRepo.MyList.Count + 1);
         }
         Human human = Library.HumanRepo.MyList.Find(h => h.Id == id)!;
-        if(human is Member member)
+        if (human is Member member)
         {
             member.BorrowedBooks.ForEach(b => member.GiveBookBack(b.Id));
         }
@@ -421,6 +433,36 @@ public class UIHandler
 
         Library.HumanRepo.MyList.Add(newRole!);
         System.Console.WriteLine();
+        System.Console.WriteLine("!!!Successful!!!");
+    }
+
+    private void GiveBorrowedBookBackUI(Member member)
+    {
+        if (member.BorrowedBooks.Count == 0)
+        {
+            System.Console.WriteLine();
+            System.Console.WriteLine("!!!You don't have any borrowed book!!!");
+            return;
+        }
+
+        System.Console.WriteLine("Here is the list of borrowed books by you: ");
+        foreach (var b in member.BorrowedBooks)
+        {
+            System.Console.WriteLine("----------------------");
+            System.Console.WriteLine($"{b.Id}- {b.Name}");
+        }
+
+        System.Console.WriteLine();
+        System.Console.WriteLine("Enter book's Id: ");
+
+        int id = UIHelper.GetValidInteger();
+        while (!member.BorrowedBooks.Select(b => b.Id).Contains(id))
+        {
+            System.Console.WriteLine("!!!Enter valid ID!!!");
+            id = UIHelper.GetValidInteger();
+        }
+
+        member.GiveBookBack(id);
         System.Console.WriteLine("!!!Successful!!!");
     }
 }
