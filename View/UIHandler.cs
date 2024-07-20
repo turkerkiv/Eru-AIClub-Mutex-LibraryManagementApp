@@ -34,11 +34,11 @@ public class UIHandler
                 {
                     System.Console.WriteLine("1- Register a member");
                     System.Console.WriteLine("2- See pending borrow request");
-                    System.Console.WriteLine("3- See pending book creation request");
                 }
                 if (AccountManager.CurrentHuman is Manager manager)
                 {
                     System.Console.WriteLine("1- Change role of someone");
+                    System.Console.WriteLine("2- See pending book creation request");
                 }
 
                 System.Console.WriteLine("9- Read a book");
@@ -77,10 +77,10 @@ public class UIHandler
                     switch (inputKey)
                     {
                         case ConsoleKey.D1:
-                            //search book
+                            SearchBookUI(member);
                             break;
                         case ConsoleKey.D2:
-                            //borrow book
+                            BorrowBookUI(member);
                             break;
                     }
                     break;
@@ -93,9 +93,6 @@ public class UIHandler
                         case ConsoleKey.D2:
                             //approve borrow request with 1 more click 
                             break;
-                        case ConsoleKey.D3:
-                            //read book then approve with 1 more click
-                            break;
                     }
                     break;
                 case Manager manager:
@@ -103,6 +100,9 @@ public class UIHandler
                     {
                         case ConsoleKey.D1:
                             //change role with generic method
+                            break;
+                        case ConsoleKey.D2:
+                            //read book then approve with 1 more click
                             break;
                     }
                     break;
@@ -173,13 +173,51 @@ public class UIHandler
         author.CreateBook(name);
     }
 
+    private void SearchBookUI(Human human)
+    {
+        System.Console.WriteLine("Search book by name: ");
+        string input = Console.ReadLine() ?? "";
+        List<Book> books = human.SearchBook(input).GetRange(0, 5);
+        System.Console.WriteLine("Here is the first 5 book that matches your input: ");
+        foreach (var b in books)
+        {
+            System.Console.WriteLine($"Book Id: {b.Id}, Book name: {b.Name}, Author: {String.Join(' ', b.Authors)}, Page: {b.PageCount} Available to borrow?: {b.IsAvailable} " + (b.IsAvailable ? "" : "Date left to be available: " + b.DateLeft));
+        }
+    }
+
+    private void BorrowBookUI(Member member)
+    {
+        System.Console.WriteLine("Enter the id of book you wanna borrow: ");
+        int id = UIHelper.GetValidIntWithinRange(Library.BookRepo.MyList.Count + 1);
+        member.BorrowBook(id);
+        System.Console.WriteLine("Request arrived. Wait for the recepcionist's approval.");
+    }
+
+    //for members to read
     private void ReadBookUI(Human human)
     {
         System.Console.WriteLine("Enter book's Id: ");
-        int id = UIHelper.GetValidIntWithinRange(Library.BookRepo.MyList.Count);
+        int id = UIHelper.GetValidIntWithinRange(Library.BookRepo.MyList.Count + 1);
 
         Book book = human.ReadBook(id);
 
+        int page = 0;
+        do
+        {
+            System.Console.WriteLine("This book is " + book.PageCount + " pages long. Enter page number to read or 0 to exit");
+            page = UIHelper.GetValidIntWithinRange(book.PageCount + 1);
+
+            string text = book.Pages[page - 1].Text ?? "";
+            System.Console.WriteLine("----------------Page " + page + "----------------");
+            System.Console.WriteLine(text);
+            System.Console.WriteLine("----------------Page " + page + "----------------");
+        }
+        while (page != 0);
+    }
+
+    //for managers to check new book
+    private void ReadBookUI(Human human, Book book)
+    {
         int page = 0;
         do
         {
