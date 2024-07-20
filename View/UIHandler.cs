@@ -106,7 +106,7 @@ public class UIHandler
                     switch (inputKey)
                     {
                         case ConsoleKey.D1:
-                            //change role with generic method
+                            ChangeRoleOfSomeoneUI();
                             break;
                         case ConsoleKey.D2:
                             ReadBookUI(manager);
@@ -334,5 +334,59 @@ public class UIHandler
         string newPassword = Console.ReadLine() ?? "";
         AccountManager.ChangePassword(newPassword);
         System.Console.WriteLine("Your new password is: " + newPassword + " Please dont share with someone else.");
+    }
+
+    private void ChangeRoleOfSomeoneUI()
+    {
+        System.Console.WriteLine("Enter the id of user you wanna change role of: ");
+        int id = UIHelper.GetValidIntWithinRange(1, Library.HumanRepo.MyList.Count + 1);
+        while (id == AccountManager.CurrentHuman!.Id)
+        {
+            System.Console.WriteLine();
+            System.Console.WriteLine("!!!You cannot select yourself!!!");
+            id = UIHelper.GetValidIntWithinRange(1, Library.HumanRepo.MyList.Count + 1);
+        }
+        Human human = Library.HumanRepo.MyList.Find(h => h.Id == id)!;
+        System.Console.WriteLine("Which role you want to turn into?");
+        System.Console.WriteLine("1- Member\n2- Author\n3- Recepcionist\n4- Manager");
+        var key = Console.ReadKey().Key;
+        while (!new ConsoleKey[] { ConsoleKey.D1, ConsoleKey.D2, ConsoleKey.D3, ConsoleKey.D4 }.Contains(key))
+        {
+            key = Console.ReadKey().Key;
+        }
+
+        Library.HumanRepo.MyList.Remove(human);
+        Human? newRole = null;
+        switch (key)
+        {
+            case ConsoleKey.D1:
+                newRole = new Member(human.Password, human.Name, human.Surname, human.Age)
+                {
+                    Id = human.Id
+                };
+                break;
+            case ConsoleKey.D2:
+                newRole = new Author(human.Password, human.Name, human.Surname, human.Age)
+                {
+                    Id = human.Id
+                };
+                break;
+            case ConsoleKey.D3:
+                newRole = new Recepcionist(new List<Weekdays> { }, "", human.Password, human.Name, human.Surname, human.Age)
+                {
+                    Id = human.Id,
+                };
+                break;
+            case ConsoleKey.D4:
+                newRole = new Manager(new List<Weekdays> { }, "", human.Password, human.Name, human.Surname, human.Age)
+                {
+                    Id = human.Id,
+                };
+                break;
+        }
+
+        Library.HumanRepo.MyList.Add(newRole!);
+        System.Console.WriteLine();
+        System.Console.WriteLine("!!!Successful!!!");
     }
 }
