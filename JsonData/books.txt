@@ -1,1 +1,1 @@
-[]
+[{"Id":1,"Pages":[{"PageNumber":1,"Text":""},{"PageNumber":2,"Text":"r\u0000r\u0000\u0000ger\u0000g\u0000e3r"},{"PageNumber":3,"Text":"rpkgmerkpgm"}],"Authors":[{"CurrentPages":[],"Id":3,"Password":"1","Name":"autho","Surname":"r","Age":25}],"Name":"turkos","IsAvailable":false,"GivenDate":null,"AvailableDate":null}]

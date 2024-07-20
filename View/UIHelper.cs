@@ -17,11 +17,11 @@ public static class UIHelper
     public static int GetValidIntWithinRange(int listCount)
     {
         int num = GetValidInteger();
-        bool isWithinRange = listCount > num && num > 0;
+        bool isWithinRange = listCount > num && num >= 0;
         while (!isWithinRange)
         {
             num = GetValidInteger();
-            isWithinRange = listCount > num && num > 0;
+            isWithinRange = listCount > num && num >= 0;
         }
         return num;
     }
@@ -34,6 +34,7 @@ public static class UIHelper
             System.Console.WriteLine("This book is " + book.PageCount + " pages long. Enter page number to read or 0 to exit");
             page = UIHelper.GetValidIntWithinRange(book.PageCount + 1);
 
+            if(page == 0) continue;
             string text = book.Pages[page - 1].Text ?? "";
             System.Console.WriteLine("----------------Page " + page + "----------------");
             System.Console.WriteLine(text);
