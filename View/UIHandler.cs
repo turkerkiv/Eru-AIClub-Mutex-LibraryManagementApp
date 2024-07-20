@@ -27,8 +27,8 @@ public class UIHandler
                 }
                 if (AccountManager.CurrentHuman is Author author)
                 {
-                    System.Console.WriteLine("3- Write a page");
-                    System.Console.WriteLine("4- Turn all pages into book");
+                    System.Console.WriteLine("3- Write a page"); //OK
+                    System.Console.WriteLine("4- Turn all pages into book"); //OK
                 }
                 if (AccountManager.CurrentHuman is Recepcionist recepcionist)
                 {
@@ -66,10 +66,10 @@ public class UIHandler
                     switch (inputKey)
                     {
                         case ConsoleKey.D3:
-                            WritePageUI(author); //OK
+                            WritePageUI(author);
                             break;
                         case ConsoleKey.D4:
-                            CreateBookUI(author); //OK
+                            CreateBookUI(author);
                             break;
                     }
                     break;
@@ -173,7 +173,7 @@ public class UIHandler
             System.Console.WriteLine("You didn't write a single page!");
             return;
         }
-        
+
         System.Console.WriteLine("Enter book's name: ");
         string name = Console.ReadLine() ?? "";
         author.CreateBook(name);
@@ -181,13 +181,23 @@ public class UIHandler
 
     private void SearchBookUI(Human human)
     {
+        System.Console.WriteLine();
         System.Console.WriteLine("Search book by name: ");
         string input = Console.ReadLine() ?? "";
         List<Book> books = human.SearchBook(input);
-        System.Console.WriteLine("Here is the first 5 book that matches your input: ");
-        foreach (var b in books)
+        if (books == null || books.Count == 0)
         {
-            System.Console.WriteLine($"Book Id: {b.Id}, Book name: {b.Name}, Author: {String.Join(' ', b.Authors.Select(a => a.Name))}, Page: {b.PageCount} Available to borrow?: {b.IsAvailable} " + (b.IsAvailable ? "" : "Date left to be available: " + b.DateLeft));
+            System.Console.WriteLine();
+            System.Console.WriteLine("!!!There is no book associated with your input!!!");
+            return;
+        }
+
+        System.Console.WriteLine();
+        System.Console.WriteLine("Here is the book/s that matches your input: (Max 5 book)");
+        foreach (var b in books.GetRange(0, Math.Min(5, books.Count)))
+        {
+            System.Console.WriteLine("---------------------");
+            System.Console.WriteLine($"Book Id: {b.Id}\nBook name: {b.Name}\nAuthor: {String.Join(' ', b.Authors.Select(a => a.Name))}\nPage: {b.PageCount}\nAvailable to borrow?: {b.IsAvailable}\n" + (b.IsAvailable ? "" : "Date left to be available: " + b.DateLeft));
         }
     }
 
