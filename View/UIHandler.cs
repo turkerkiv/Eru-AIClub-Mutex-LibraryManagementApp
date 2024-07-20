@@ -66,10 +66,10 @@ public class UIHandler
                     switch (inputKey)
                     {
                         case ConsoleKey.D3:
-                            WritePageUI(author);
+                            WritePageUI(author); //OK
                             break;
                         case ConsoleKey.D4:
-                            CreateBookUI(author);
+                            CreateBookUI(author); //OK
                             break;
                     }
                     break;
@@ -168,6 +168,12 @@ public class UIHandler
 
     private void CreateBookUI(Author author)
     {
+        if (author.CurrentPages.Count == 0)
+        {
+            System.Console.WriteLine("You didn't write a single page!");
+            return;
+        }
+        
         System.Console.WriteLine("Enter book's name: ");
         string name = Console.ReadLine() ?? "";
         author.CreateBook(name);
@@ -217,7 +223,7 @@ public class UIHandler
         System.Console.WriteLine($"Other infos about book: Name: {book.Name}, Author: {String.Join(' ', book.Authors.Select(a => a.Name))}");
         System.Console.WriteLine("Do you want to add this book to library? (y/n)");
         var key = Console.ReadKey().Key;
-        if(key == ConsoleKey.Y)
+        if (key == ConsoleKey.Y)
         {
             System.Console.WriteLine("Book added!");
             manager.AddBookToLibrary();
