@@ -40,7 +40,7 @@ public class UIHandler
                 if (AccountManager.CurrentHuman is Manager manager)
                 {
                     System.Console.WriteLine("1- Change role of someone");
-                    System.Console.WriteLine("2- See pending book creation request");
+                    System.Console.WriteLine("2- See pending book creation request"); //OK
                 }
 
                 //add changing password
@@ -137,6 +137,7 @@ public class UIHandler
         System.Console.WriteLine();
         System.Console.WriteLine("Enter your ID: ");
         int id = UIHelper.GetValidInteger();
+        System.Console.WriteLine();
         System.Console.WriteLine("Enter your password: ");
         string password = Console.ReadLine() ?? "";
         AccountManager.Login(id, password);
@@ -147,23 +148,28 @@ public class UIHandler
         System.Console.WriteLine();
         System.Console.WriteLine("Enter member's name: ");
         string name = Console.ReadLine() ?? "";
+        System.Console.WriteLine();
         System.Console.WriteLine("Enter member's surname: ");
         string surname = Console.ReadLine() ?? "";
+        System.Console.WriteLine();
         System.Console.WriteLine("Enter member's age: ");
         int age = UIHelper.GetValidInteger();
 
         Member? member = new Member("", name, surname, age);
         string temppass = rece.SignUpMember(member);
 
+        System.Console.WriteLine();
         System.Console.WriteLine("!!!Signed up. Here is the temporary password of member: " + temppass + " !!!");
     }
 
     private void WritePageUI(Author author)
     {
+        System.Console.WriteLine();
         System.Console.WriteLine("!!!You can start writing now.!!!");
         string text = Console.ReadLine() ?? "";
         while (!author.TryWritePage(text))
         {
+            System.Console.WriteLine();
             System.Console.WriteLine("!!!Please don't exceed 200 words!!!");
             text = Console.ReadLine() ?? "";
         }
@@ -173,10 +179,12 @@ public class UIHandler
     {
         if (author.CurrentPages.Count == 0)
         {
+            System.Console.WriteLine();
             System.Console.WriteLine("!!!You didn't write a single page!!!");
             return;
         }
 
+        System.Console.WriteLine();
         System.Console.WriteLine("Enter book's name: ");
         string name = Console.ReadLine() ?? "";
         author.CreateBook(name);
@@ -206,20 +214,28 @@ public class UIHandler
 
     private void BorrowBookUI(Member member)
     {
+        System.Console.WriteLine();
         System.Console.WriteLine("Enter the id of book you wanna borrow: ");
-        int id = UIHelper.GetValidIntWithinRange(Library.BookRepo.MyList.Count + 1);
+        int id = UIHelper.GetValidIntWithinRange(1, Library.BookRepo.MyList.Count + 1);
         bool result = member.TryBorrowBook(id);
         if (result)
+        {
+            System.Console.WriteLine();
             System.Console.WriteLine("!!!Request arrived. Wait for the recepcionist's approval!!!");
+        }
         else
+        {
+            System.Console.WriteLine();
             System.Console.WriteLine("!!!You tried to borrow book that already borrowed. Please wait!!!");
+        }
     }
 
     //for members to read
     private void ReadBookUI(Human human)
     {
+        System.Console.WriteLine();
         System.Console.WriteLine("Enter book's Id: ");
-        int id = UIHelper.GetValidIntWithinRange(Library.BookRepo.MyList.Count + 1);
+        int id = UIHelper.GetValidIntWithinRange(1, Library.BookRepo.MyList.Count + 1);
 
         Book book = human.ReadBook(id);
 
@@ -229,7 +245,7 @@ public class UIHandler
     //for managers to check new book
     private void ReadBookUI(Manager manager)
     {
-         if (manager.PendingBooksToCreate.Count == 0)
+        if (manager.PendingBooksToCreate.Count == 0)
         {
             System.Console.WriteLine();
             System.Console.WriteLine("!!!There is no pending requests!!!");
@@ -237,19 +253,23 @@ public class UIHandler
         }
         Book book = manager.PendingBooksToCreate.Peek();
 
+        System.Console.WriteLine();
         System.Console.WriteLine($"Infos about book: Name: {book.Name}, Author: {String.Join(' ', book.Authors.Select(a => a.Name))}");
-        
+        System.Console.WriteLine();
         UIHelper.ReadBook(book);
+        System.Console.WriteLine();
         System.Console.WriteLine("Do you want to add this book to library? (y/n)");
-        
+
         var key = Console.ReadKey().Key;
         if (key == ConsoleKey.Y)
         {
+            System.Console.WriteLine();
             System.Console.WriteLine("!!!Book added!!!");
             manager.AddBookToLibrary();
         }
         else
         {
+            System.Console.WriteLine();
             System.Console.WriteLine("!!!Book removed!!!");
             manager.PendingBooksToCreate.Dequeue();
         }
