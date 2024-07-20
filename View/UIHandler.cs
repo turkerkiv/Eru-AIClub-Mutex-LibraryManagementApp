@@ -377,6 +377,10 @@ public class UIHandler
             id = UIHelper.GetValidIntWithinRange(1, Library.HumanRepo.MyList.Count + 1);
         }
         Human human = Library.HumanRepo.MyList.Find(h => h.Id == id)!;
+        if(human is Member member)
+        {
+            member.BorrowedBooks.ForEach(b => member.GiveBookBack(b.Id));
+        }
         System.Console.WriteLine("Which role you want to turn into?");
         System.Console.WriteLine("1- Member\n2- Author\n3- Recepcionist\n4- Manager");
         var key = Console.ReadKey().Key;

@@ -25,12 +25,11 @@ public class Recepcionist : Staff
         member.BorrowedBooks.Add(book);
     }
 
-    public void TakeBookBack(Book book, Member member)
+    public void TakeBookBack(Book book)
     {
         book.IsAvailable = true;
         book.GivenDate = null;
         book.AvailableDate = null;
-        member.BorrowedBooks.Remove(book);
     }
 
     public string SignUpMember(Member member)

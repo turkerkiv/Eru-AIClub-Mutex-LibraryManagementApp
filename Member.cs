@@ -19,4 +19,14 @@ public class Member : Human
         r.GetBorrowRequest(this, bookToBorrow);
         return true;
     }
+
+    public void GiveBookBack(int id)
+    {
+        Random rnd = new Random();
+        List<Recepcionist> recepcionists = Library.HumanRepo.MyList.OfType<Recepcionist>().ToList();
+        Recepcionist r = recepcionists[rnd.Next(recepcionists.Count)];
+        Book book = BorrowedBooks.Find(b => b.Id == id)!;
+        r.TakeBookBack(book);
+        BorrowedBooks.Remove(book);
+    }
 }
