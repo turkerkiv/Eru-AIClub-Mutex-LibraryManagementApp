@@ -20,11 +20,10 @@ public class UIHandler
 
             if (AccountManager.IsLoggedIn)
             {
-                //WHAT WE GONNA DO IF 2 PERSON WANTS SAME BOOK. LIKE SHOW IF BOOK IS AVAILABLE TO RECEPCIONIST
                 //MAYBE MAKE MEMBERS CAN READ ONLY BOOKS THAT THEY BORROWED
                 if (AccountManager.CurrentHuman is Member member)
                 {
-                    System.Console.WriteLine("1- Search book by name");//OK
+                    System.Console.WriteLine("1- Search book by name"); //OK
                     System.Console.WriteLine("2- Borrow book by Id"); //OK
                 }
                 if (AccountManager.CurrentHuman is Author author)
@@ -43,20 +42,19 @@ public class UIHandler
                     System.Console.WriteLine("2- See pending book creation request"); //OK
                 }
 
-                //add changing password
-                System.Console.WriteLine("9- Read a book");
-                System.Console.WriteLine("0- Logout");
+                System.Console.WriteLine("8- Change Password"); //OK
+                System.Console.WriteLine("9- Read a book"); //OK
+                System.Console.WriteLine("0- Logout"); //OK
             }
             else
             {
-                System.Console.WriteLine("1- Login");
-                System.Console.WriteLine("ESC- Exit");
+                System.Console.WriteLine("1- Login"); //OK
+                System.Console.WriteLine("ESC- Exit"); //OK
             }
 
             inputKey = Console.ReadKey().Key;
             ProcessInputKey(inputKey);
         }
-
     }
 
     private void ProcessInputKey(ConsoleKey inputKey)
@@ -119,6 +117,9 @@ public class UIHandler
             }
             switch (inputKey)
             {
+                case ConsoleKey.D8:
+                    ChangePasswordUI();
+                    break;
                 case ConsoleKey.D9:
                     ReadBookUI(AccountManager.CurrentHuman!);
                     break;
@@ -326,4 +327,12 @@ public class UIHandler
         }
     }
 
+    private void ChangePasswordUI()
+    {
+        System.Console.WriteLine();
+        System.Console.WriteLine("Enter the new password: ");
+        string newPassword = Console.ReadLine() ?? "";
+        AccountManager.ChangePassword(newPassword);
+        System.Console.WriteLine("Your new password is: " + newPassword + " Please dont share with someone else.");
+    }
 }
