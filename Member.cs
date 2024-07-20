@@ -2,6 +2,8 @@ namespace LibraryManagementApp;
 
 public class Member : Human
 {
+    public List<Book> BorrowedBooks { get; set; } = new();
+
     public Member(string password, string name, string surname, int age) : base(password, name, surname, age)
     {
     }

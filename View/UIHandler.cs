@@ -18,9 +18,9 @@ public class UIHandler
             System.Console.WriteLine("Here is the list of operations you can do: ");
             System.Console.WriteLine();
 
+            //GİVE BORROWED BOOK BACK
             if (AccountManager.IsLoggedIn)
             {
-                //MAYBE MAKE MEMBERS CAN READ ONLY BOOKS THAT THEY BORROWED
                 if (AccountManager.CurrentHuman is Member member)
                 {
                     System.Console.WriteLine("1- Search book by name"); //OK
@@ -38,7 +38,7 @@ public class UIHandler
                 }
                 if (AccountManager.CurrentHuman is Manager manager)
                 {
-                    System.Console.WriteLine("1- Change role of someone");
+                    System.Console.WriteLine("1- Change role of someone"); //OK
                     System.Console.WriteLine("2- See pending book creation request"); //OK
                 }
 
@@ -248,11 +248,40 @@ public class UIHandler
     //for members to read
     private void ReadBookUI(Human human)
     {
-        System.Console.WriteLine();
-        System.Console.WriteLine("Enter book's Id: ");
-        int id = UIHelper.GetValidIntWithinRange(1, Library.BookRepo.MyList.Count + 1);
+        Book? book = null;
+        int id = 0;
 
-        Book book = human.ReadBook(id);
+        if (human is Member member)
+        {
+            System.Console.WriteLine();
+            System.Console.WriteLine("Here is the list of borrowed books by you: ");
+            foreach (var b in member.BorrowedBooks)
+            {
+                System.Console.WriteLine("----------------------");
+                System.Console.WriteLine($"{b.Id}- {b.Name}");
+            }
+
+            System.Console.WriteLine();
+            System.Console.WriteLine("Enter book's Id or 0 to exit: ");
+
+            id = UIHelper.GetValidInteger();
+            while (!member.BorrowedBooks.Select(b => b.Id).Contains(id))
+            {
+                System.Console.WriteLine("!!!Enter valid ID!!!");
+                if(id == 0) return;
+                id = UIHelper.GetValidInteger();
+            }
+
+            book = member.ReadBook(id);
+        }
+        else
+        {
+            System.Console.WriteLine();
+            System.Console.WriteLine("Enter book's Id: ");
+
+            id = UIHelper.GetValidIntWithinRange(1, Library.BookRepo.MyList.Count + 1);
+            book = human.ReadBook(id);
+        }
 
         UIHelper.ReadBook(book);
     }
@@ -338,6 +367,7 @@ public class UIHandler
 
     private void ChangeRoleOfSomeoneUI()
     {
+        System.Console.WriteLine();
         System.Console.WriteLine("Enter the id of user you wanna change role of: ");
         int id = UIHelper.GetValidIntWithinRange(1, Library.HumanRepo.MyList.Count + 1);
         while (id == AccountManager.CurrentHuman!.Id)

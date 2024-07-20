@@ -21,13 +21,16 @@ public class Recepcionist : Staff
         book.GivenDate = DateTime.Now;
         book.IsAvailable = false;
         book.AvailableDate = DateTime.Now.AddDays(14);
+        Member member = (Member) Library.HumanRepo.MyList.Find(h => h.Id == bq.HumanId)!;
+        member.BorrowedBooks.Add(book);
     }
 
-    public void TakeBookBack(Book book)
+    public void TakeBookBack(Book book, Member member)
     {
         book.IsAvailable = true;
         book.GivenDate = null;
         book.AvailableDate = null;
+        member.BorrowedBooks.Remove(book);
     }
 
     public string SignUpMember(Member member)
