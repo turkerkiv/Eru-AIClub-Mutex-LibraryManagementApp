@@ -20,10 +20,12 @@ public class UIHandler
 
             if (AccountManager.IsLoggedIn)
             {
+                //WHAT WE GONNA DO IF 2 PERSON WANTS SAME BOOK. LIKE SHOW IF BOOK IS AVAILABLE TO RECEPCIONIST
+                //MAYBE MAKE MEMBERS CAN READ ONLY BOOKS THAT THEY BORROWED
                 if (AccountManager.CurrentHuman is Member member)
                 {
-                    System.Console.WriteLine("1- Search book by name");
-                    System.Console.WriteLine("2- Borrow book by Id");
+                    System.Console.WriteLine("1- Search book by name");//OK
+                    System.Console.WriteLine("2- Borrow book by Id"); //OK
                 }
                 if (AccountManager.CurrentHuman is Author author)
                 {
@@ -33,7 +35,7 @@ public class UIHandler
                 if (AccountManager.CurrentHuman is Recepcionist recepcionist)
                 {
                     System.Console.WriteLine("1- Register a member");
-                    System.Console.WriteLine("2- See pending borrow request");
+                    System.Console.WriteLine("2- See pending borrow request"); //OK
                 }
                 if (AccountManager.CurrentHuman is Manager manager)
                 {
@@ -197,7 +199,7 @@ public class UIHandler
         foreach (var b in books.GetRange(0, Math.Min(5, books.Count)))
         {
             System.Console.WriteLine("---------------------");
-            System.Console.WriteLine($"Book Id: {b.Id}\nBook name: {b.Name}\nAuthor: {String.Join(' ', b.Authors.Select(a => a.Name))}\nPage: {b.PageCount}\nAvailable to borrow?: {b.IsAvailable}\n" + (b.IsAvailable ? "" : "Date left to be available: " + b.DateLeft));
+            System.Console.WriteLine($"Book Id: {b.Id}\nBook name: {b.Name}\nAuthor: {String.Join(' ', b.Authors.Select(a => a.Name))}\nPage: {b.PageCount}\nAvailable to borrow?: {b.IsAvailable}\n" + (b.IsAvailable ? "" : "Date left to be available: " + b.DateLeft.Days + " Days"));
         }
     }
 
@@ -247,18 +249,27 @@ public class UIHandler
 
     private void SeeBorrowRequestsUI(Recepcionist recepcionist)
     {
+        if (recepcionist.BookBorrowRequests.Count == 0)
+        {
+            System.Console.WriteLine();
+            System.Console.WriteLine("There is no pending requests.");
+            return;
+        }
         BookRequest bookReq = recepcionist.BookBorrowRequests.Peek();
         Book book = Library.BookRepo.MyList.Find(b => b.Id == bookReq.BookId)!;
         Member member = (Member)Library.HumanRepo.MyList.Find(h => h.Id == bookReq.HumanId)!;
+        System.Console.WriteLine();
         System.Console.WriteLine($"Member named {member.Name} is want to borrow the book called {book.Name}. Do you want to accept? (y/n)");
         var key = Console.ReadKey().Key;
         if (key == ConsoleKey.Y)
         {
+            System.Console.WriteLine();
             System.Console.WriteLine("Request approved");
             recepcionist.LendBookFor14Days();
         }
         else if (key == ConsoleKey.N)
         {
+            System.Console.WriteLine();
             System.Console.WriteLine("Request removed");
             recepcionist.BookBorrowRequests.Dequeue();
         }

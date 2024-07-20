@@ -11,9 +11,9 @@ public class Book
     public bool IsAvailable { get; set; }
     public DateTime? GivenDate { get; set; }
     public DateTime? AvailableDate { get; set; }
-    
+
     [JsonIgnore]
-    public TimeSpan? DateLeft => AvailableDate - GivenDate;
+    public TimeSpan DateLeft => (AvailableDate - GivenDate) ?? new TimeSpan();
     [JsonIgnore]
     public int PageCount => Pages.Count;
 
@@ -22,7 +22,7 @@ public class Book
         Name = name;
         Pages = pages;
         Authors = authors;
-        IsAvailable = false;
+        IsAvailable = true;
         Id = Library.BookRepo.MyList.Count + 1;
     }
 }
