@@ -146,7 +146,15 @@ public class UIHandler
         System.Console.WriteLine();
         System.Console.WriteLine("Enter your password: ");
         string password = Console.ReadLine() ?? "";
-        AccountManager.Login(id, password);
+        if (AccountManager.Login(id, password))
+        {
+            Human human = AccountManager.CurrentHuman!;
+            System.Console.WriteLine($"!!!Welcome {human.Name}!!!");
+        }
+        else
+        {
+            System.Console.WriteLine("!!!Password or id is incorrect!!!");
+        }
     }
 
     private void RegisterUI(Recepcionist rece)
@@ -292,6 +300,15 @@ public class UIHandler
         BookRequest bookReq = recepcionist.BookBorrowRequests.Peek();
         Book book = Library.BookRepo.MyList.Find(b => b.Id == bookReq.BookId)!;
         Member member = (Member)Library.HumanRepo.MyList.Find(h => h.Id == bookReq.HumanId)!;
+
+        if (!book.IsAvailable)
+        {
+            System.Console.WriteLine();
+            System.Console.WriteLine($"!!!Member named{member.Name} is want to borrow the book called {book.Name} but someone borrowed book first. So request is being deleted!!!");
+            recepcionist.BookBorrowRequests.Dequeue();
+            return;
+        }
+
         System.Console.WriteLine();
         System.Console.WriteLine($"Member named {member.Name} is want to borrow the book called {book.Name}. Do you want to accept? (y/n)");
         var key = Console.ReadKey().Key;
