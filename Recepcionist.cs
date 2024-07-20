@@ -14,7 +14,7 @@ public class Recepcionist : Staff
         BookBorrowRequests.Enqueue(new BookRequest(book.Id, human.Id));
     }
 
-    public void LendBook()
+    public void LendBookFor14Days()
     {
         BookRequest bq = BookBorrowRequests.Dequeue();
         Book book = Library.BookRepo.MyList.Find(b => b.Id == bq.BookId)!;

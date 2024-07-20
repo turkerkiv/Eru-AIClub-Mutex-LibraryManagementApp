@@ -91,7 +91,7 @@ public class UIHandler
                             RegisterUI(recepcionist);
                             break;
                         case ConsoleKey.D2:
-                            //approve borrow request with 1 more click 
+                            SeeBorrowRequestsUI(recepcionist);
                             break;
                     }
                     break;
@@ -192,7 +192,7 @@ public class UIHandler
         bool result = member.TryBorrowBook(id);
         if (result)
             System.Console.WriteLine("Request arrived. Wait for the recepcionist's approval.");
-        else   
+        else
             System.Console.WriteLine("You tried to borrow book that already borrowed. Please wait");
     }
 
@@ -233,5 +233,24 @@ public class UIHandler
             System.Console.WriteLine("----------------Page " + page + "----------------");
         }
         while (page != 0);
+    }
+
+    private void SeeBorrowRequestsUI(Recepcionist recepcionist)
+    {
+        BookRequest bookReq = recepcionist.BookBorrowRequests.Peek();
+        Book book = Library.BookRepo.MyList.Find(b => b.Id == bookReq.BookId)!;
+        Member member = (Member)Library.HumanRepo.MyList.Find(h => h.Id == bookReq.HumanId)!;
+        System.Console.WriteLine($"Member named {member.Name} is want to borrow the book called {book.Name}. Do you want to accept? y/n");
+        var key = Console.ReadKey().Key;
+        if (key == ConsoleKey.Y)
+        {
+            System.Console.WriteLine("Request approved");
+            recepcionist.LendBookFor14Days();
+        }
+        else if (key == ConsoleKey.N)
+        {
+            System.Console.WriteLine("Request removed");
+            recepcionist.BookBorrowRequests.Dequeue();
+        }
     }
 }
