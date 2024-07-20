@@ -3,7 +3,7 @@ namespace LibraryManagementApp;
 
 public class Manager : Staff
 {
-    Queue<Book> PendingBooksToCreate { get; set; } = new();
+    public Queue<Book> PendingBooksToCreate { get; set; } = new();
 
     public Manager(List<Weekdays> workDays, string shift, string password, string name, string surname, int age) : base(workDays, shift, password, name, surname, age)
     {

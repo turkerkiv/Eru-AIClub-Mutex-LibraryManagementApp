@@ -25,4 +25,20 @@ public static class UIHelper
         }
         return num;
     }
+
+    public static void ReadBook(Book book)
+    {
+        int page = 0;
+        do
+        {
+            System.Console.WriteLine("This book is " + book.PageCount + " pages long. Enter page number to read or 0 to exit");
+            page = UIHelper.GetValidIntWithinRange(book.PageCount + 1);
+
+            string text = book.Pages[page - 1].Text ?? "";
+            System.Console.WriteLine("----------------Page " + page + "----------------");
+            System.Console.WriteLine(text);
+            System.Console.WriteLine("----------------Page " + page + "----------------");
+        }
+        while (page != 0);
+    }
 }

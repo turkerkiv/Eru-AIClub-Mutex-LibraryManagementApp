@@ -102,7 +102,7 @@ public class UIHandler
                             //change role with generic method
                             break;
                         case ConsoleKey.D2:
-                            //read book then approve with 1 more click
+                            ReadBookUI(manager);
                             break;
                     }
                     break;
@@ -204,35 +204,29 @@ public class UIHandler
 
         Book book = human.ReadBook(id);
 
-        int page = 0;
-        do
-        {
-            System.Console.WriteLine("This book is " + book.PageCount + " pages long. Enter page number to read or 0 to exit");
-            page = UIHelper.GetValidIntWithinRange(book.PageCount + 1);
-
-            string text = book.Pages[page - 1].Text ?? "";
-            System.Console.WriteLine("----------------Page " + page + "----------------");
-            System.Console.WriteLine(text);
-            System.Console.WriteLine("----------------Page " + page + "----------------");
-        }
-        while (page != 0);
+        UIHelper.ReadBook(book);
     }
 
     //for managers to check new book
-    private void ReadBookUI(Human human, Book book)
+    private void ReadBookUI(Manager manager)
     {
-        int page = 0;
-        do
-        {
-            System.Console.WriteLine("This book is " + book.PageCount + " pages long. Enter page number to read or 0 to exit");
-            page = UIHelper.GetValidIntWithinRange(book.PageCount + 1);
+        Book book = manager.PendingBooksToCreate.Peek();
 
-            string text = book.Pages[page - 1].Text ?? "";
-            System.Console.WriteLine("----------------Page " + page + "----------------");
-            System.Console.WriteLine(text);
-            System.Console.WriteLine("----------------Page " + page + "----------------");
+        UIHelper.ReadBook(book);
+
+        System.Console.WriteLine($"Other infos about book: Name: {book.Name}, Author: {String.Join(' ', book.Authors)}");
+        System.Console.WriteLine("Do you want to add this book to library? (y/n)");
+        var key = Console.ReadKey().Key;
+        if(key == ConsoleKey.Y)
+        {
+            System.Console.WriteLine("Book added!");
+            manager.AddBookToLibrary();
         }
-        while (page != 0);
+        else
+        {
+            System.Console.WriteLine("Book removed!");
+            manager.PendingBooksToCreate.Dequeue();
+        }
     }
 
     private void SeeBorrowRequestsUI(Recepcionist recepcionist)
@@ -240,7 +234,7 @@ public class UIHandler
         BookRequest bookReq = recepcionist.BookBorrowRequests.Peek();
         Book book = Library.BookRepo.MyList.Find(b => b.Id == bookReq.BookId)!;
         Member member = (Member)Library.HumanRepo.MyList.Find(h => h.Id == bookReq.HumanId)!;
-        System.Console.WriteLine($"Member named {member.Name} is want to borrow the book called {book.Name}. Do you want to accept? y/n");
+        System.Console.WriteLine($"Member named {member.Name} is want to borrow the book called {book.Name}. Do you want to accept? (y/n)");
         var key = Console.ReadKey().Key;
         if (key == ConsoleKey.Y)
         {
@@ -253,4 +247,5 @@ public class UIHandler
             recepcionist.BookBorrowRequests.Dequeue();
         }
     }
+
 }
