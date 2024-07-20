@@ -68,6 +68,12 @@ public class UIHandler
                 case Author author:
                     switch (inputKey)
                     {
+                        case ConsoleKey.D1:
+                            SearchBookUI(author);
+                            break;
+                        case ConsoleKey.D2:
+                            BorrowBookUI(author);
+                            break;
                         case ConsoleKey.D3:
                             WritePageUI(author);
                             break;
