@@ -17,7 +17,6 @@ public static class DatabaseManager
             {
                 Type type = Type.GetType($"LibraryManagementApp.{humanWrapper.TypeName}")!;
                 Human hmn = (Human)JsonSerializer.Deserialize(humanWrapper.JsonData, type)!;
-                System.Console.WriteLine(hmn.GetType());
                 Library.HumanRepo.MyList.Add(hmn);
             });
         }

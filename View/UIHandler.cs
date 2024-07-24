@@ -31,6 +31,7 @@ public class UIHandler
                 {
                     System.Console.WriteLine("4- Write a page"); //OK
                     System.Console.WriteLine("5- Turn all pages into book"); //OK
+                    System.Console.WriteLine("6- Import a page from text file");
                 }
                 if (AccountManager.CurrentHuman is Recepcionist recepcionist)
                 {
@@ -81,6 +82,9 @@ public class UIHandler
                             break;
                         case ConsoleKey.D5:
                             CreateBookUI(author);
+                            break;
+                        case ConsoleKey.D6:
+                            ImportPageUI(author);
                             break;
                     }
                     break;
@@ -323,7 +327,7 @@ public class UIHandler
             System.Console.WriteLine("!!!Book added!!!");
             manager.AddBookToLibrary();
         }
-        else
+        else if (key == ConsoleKey.N)
         {
             System.Console.WriteLine();
             System.Console.WriteLine("!!!Book removed!!!");
@@ -464,5 +468,28 @@ public class UIHandler
 
         member.GiveBookBack(id);
         System.Console.WriteLine("!!!Successful!!!");
+    }
+
+    void ImportPageUI(Author author)
+    {
+#if WINDOWS
+        System.Console.WriteLine();
+        System.Console.WriteLine("Moving to the text file selection...");
+        Thread.Sleep(1000);
+        System.Console.WriteLine();
+        System.Console.WriteLine("You can only select text file and all the text inside the file will be saved as one page, appended to the current pages.");
+        Thread.Sleep(3000);
+        if (author.ImportPage())
+        {
+            System.Console.WriteLine();
+            System.Console.WriteLine("!!!Successfully saved!!!");
+        }
+        else
+        {
+            System.Console.WriteLine("!!!The words exceeds 200 words limit!!!");
+        }
+#else
+    System.Console.WriteLine("!!!To import a page to the app, you need to do be on windows platform!!!");
+#endif
     }
 }

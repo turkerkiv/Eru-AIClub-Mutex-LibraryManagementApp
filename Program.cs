@@ -1,9 +1,15 @@
 ﻿using LibraryManagementApp;
 using LibraryManagementApp.View;
 
-DatabaseManager.LoadAllRepos();
+internal class Program
+{
+    private static void Main(string[] args)
+    {
+        DatabaseManager.LoadAllRepos();
 
-UIHandler uIHandler = new UIHandler();
-uIHandler.RunTheApp();
-
-DatabaseManager.SaveAllRepos();
+        UIHandler uIHandler = new UIHandler();
+        uIHandler.RunTheApp();
+        
+        DatabaseManager.SaveAllRepos();
+    }
+}

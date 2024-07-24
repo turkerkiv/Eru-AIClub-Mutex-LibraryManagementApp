@@ -11,7 +11,7 @@
 *.suo
 *.user
 *.sln.docstates
-
+*.JsonData
 # Build results
 [Dd]ebug/
 [Rr]elease/
