@@ -1,6 +1,4 @@
 
-using WindowsAPICodePack.Dialogs;
-
 namespace LibraryManagementApp;
 
 public class Author : Member
@@ -34,20 +32,22 @@ public class Author : Member
         System.Console.WriteLine("!!!Successfully requested book creation!!!");
     }
 
-    public bool ImportPage()
+    public bool ImportPage(string path)
     {
-        var fileDialog = new CommonOpenFileDialog();
-        fileDialog.IsFolderPicker = false;
-        fileDialog.Filters.Add(new CommonFileDialogFilter("Text files", "txt"));
-        string text = "";
-        if (fileDialog.ShowDialog() == CommonFileDialogResult.Ok)
+        System.Console.WriteLine(path);
+        System.Console.WriteLine(Path.GetExtension(path) == ".txt");
+        System.Console.WriteLine(File.Exists(path));
+        
+        if (File.Exists(path) && Path.GetExtension(path) == ".txt")
         {
-            string path = fileDialog.FileName;
+            string text = "";
             using (var str = new StreamReader(path))
             {
                 text = str.ReadToEnd();
             }
+            return TryWritePage(text);
         }
-        return TryWritePage(text);
+        else
+            return false;
     }
 }
