@@ -34,10 +34,6 @@ public class Author : Member
 
     public bool ImportPage(string path)
     {
-        System.Console.WriteLine(path);
-        System.Console.WriteLine(Path.GetExtension(path) == ".txt");
-        System.Console.WriteLine(File.Exists(path));
-        
         if (File.Exists(path) && Path.GetExtension(path) == ".txt")
         {
             string text = "";

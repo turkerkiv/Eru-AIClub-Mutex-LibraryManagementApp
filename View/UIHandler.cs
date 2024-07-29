@@ -489,6 +489,7 @@ public class UIHandler
             System.Console.WriteLine("Here is the list of errors happened during the importing session");
             System.Console.WriteLine("!!!There is no text file in that path!!!");
             System.Console.WriteLine("!!!The words exceeds 200 words limit!!!");
+            System.Console.WriteLine("!!!File is not a text(.txt) file!!!");
         }
     }
 }
